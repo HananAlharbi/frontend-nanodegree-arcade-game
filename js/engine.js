@@ -49,7 +49,7 @@ var Engine = (function(global) {
         update(dt);
         render();
         reset();
-        setCountValue();
+        //setCountValue();
 
 
         /* Set our lastTime variable which is used to determine the time delta
@@ -67,6 +67,7 @@ var Engine = (function(global) {
      * particularly setting the lastTime variable that is required for the
      * game loop.
      */
+    
     function init() {
         reset();
         lastTime = Date.now();
@@ -182,8 +183,8 @@ var Engine = (function(global) {
     function setCountValue(){
        var s1 =  doc.getElementById("succValue");
        var c1 = doc.getElementById("collValue");
-       s1.innerHTML = succCount;                     //success and collision counter function
-       c1.innerHTML = collCount;
+       //s1.innerHTML = succCount;                     //success and collision counter function
+       //c1.innerHTML = collCount;
 
     }
 
