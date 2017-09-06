@@ -9,8 +9,9 @@
  * drawn but that is not the case. What's really happening is the entire "scene"
  * is being drawn over and over, presenting the illusion of animation.
  *
- * This engine makes the canvas' context (ctx) object globally available to make 
- * writing app.js a little simpler to work with.
+ * This engine is available globally via the Engine variable and it also makes
+ * the canvas' context (ctx) object globally available to make writing app.js
+ * a little simpler to work with.
  */
 
 var Engine = (function(global) {
@@ -26,6 +27,7 @@ var Engine = (function(global) {
 
     canvas.width = 505;
     canvas.height = 606;
+    canvas.setAttribute("id","main");
     doc.body.appendChild(canvas);
 
     /* This function serves as the kickoff point for the game loop itself
@@ -46,6 +48,9 @@ var Engine = (function(global) {
          */
         update(dt);
         render();
+        reset();
+        setCountValue();
+
 
         /* Set our lastTime variable which is used to determine the time delta
          * for the next time this function is called.
@@ -56,7 +61,7 @@ var Engine = (function(global) {
          * function again as soon as the browser is able to draw another frame.
          */
         win.requestAnimationFrame(main);
-    }
+    };
 
     /* This function does some initial setup that should only occur once,
      * particularly setting the lastTime variable that is required for the
@@ -79,14 +84,14 @@ var Engine = (function(global) {
      */
     function update(dt) {
         updateEntities(dt);
-        // checkCollisions();
+        //checkCollisions();
     }
 
-    /* This is called by the update function and loops through all of the
+    /* This is called by the update function  and loops through all of the
      * objects within your allEnemies array as defined in app.js and calls
      * their update() methods. It will then call the update function for your
      * player object. These update methods should focus purely on updating
-     * the data/properties related to the object. Do your drawing in your
+     * the data/properties related to  the object. Do your drawing in your
      * render methods.
      */
     function updateEntities(dt) {
@@ -135,11 +140,12 @@ var Engine = (function(global) {
             }
         }
 
+
         renderEntities();
     }
 
     /* This function is called by the render function and is called on each game
-     * tick. Its purpose is to then call the render functions you have defined
+     * tick. It's purpose is to then call the render functions you have defined
      * on your enemy and player entities within app.js
      */
     function renderEntities() {
@@ -157,8 +163,28 @@ var Engine = (function(global) {
      * handle game reset states - maybe a new game menu or a game over screen
      * those sorts of things. It's only called once by the init() method.
      */
+     var reachVal = false;
     function reset() {
+       while(reachVal){
+        alert('Reached the End!');
+        player.x=202;
+        player.y=375;              // resets player once end is reached
+        reachVal = false;
+       }
+       if(player.y===0){
+
+        
+        reachVal = true;
+       }
         // noop
+    }
+
+    function setCountValue(){
+       var s1 =  doc.getElementById("succValue");
+       var c1 = doc.getElementById("collValue");
+       s1.innerHTML = succCount;                     //success and collision counter function
+       c1.innerHTML = collCount;
+
     }
 
     /* Go ahead and load all of the images we know we're going to need to
@@ -175,7 +201,7 @@ var Engine = (function(global) {
     Resources.onReady(init);
 
     /* Assign the canvas' context object to the global variable (the window
-     * object when run in a browser) so that developers can use it more easily
+     * object when run in a browser) so that developer's can use it more easily
      * from within their app.js files.
      */
     global.ctx = ctx;
